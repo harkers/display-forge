@@ -2,10 +2,11 @@
 Settings API - Application configuration
 """
 
-from flask import Blueprint, request, jsonify
 from datetime import datetime
 
-from backend.models import db, Setting
+from flask import Blueprint, jsonify, request
+
+from backend.models import Setting, db
 
 settings_bp = Blueprint('settings', __name__)
 

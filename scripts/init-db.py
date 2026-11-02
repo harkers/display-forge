@@ -5,13 +5,13 @@ Creates SQLite database with all tables and indexes
 
 import os
 import sys
-from datetime import datetime
 
 # Add parent directory to path
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from backend.models import db, Setting
 from backend.app import create_app
+from backend.models import Setting, db
+
 
 def init_db():
     """Initialize database with all tables"""
@@ -43,8 +43,8 @@ def init_db():
         # Show database location
         db_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'data', 'display-forge.db')
         print(f"\n✅ Database initialized at: {db_path}")
-        print(f"📊 Tables created: notices, calendar_sources, settings, displays")
-        print(f"⚙️  Default settings added")
+        print("📊 Tables created: notices, calendar_sources, settings, displays")
+        print("⚙️  Default settings added")
 
 if __name__ == '__main__':
     init_db()

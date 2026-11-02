@@ -2,11 +2,12 @@
 Notices API - CRUD operations for display notices
 """
 
-from flask import Blueprint, request, jsonify
-from datetime import datetime, timedelta
 import json
+from datetime import datetime, timedelta
 
-from backend.models import db, Notice
+from flask import Blueprint, jsonify, request
+
+from backend.models import Notice, db
 
 notices_bp = Blueprint('notices', __name__)
 
@@ -123,7 +124,7 @@ def update_notice(id):
     from flask import current_app
     socketio = current_app.extensions.get('socketio')
     if socketio:
-    socketio.emit('notice_updated', notice.to_dict())
+        socketio.emit('notice_updated', notice.to_dict())
     
     return jsonify(notice.to_dict())
 
@@ -139,7 +140,7 @@ def delete_notice(id):
     from flask import current_app
     socketio = current_app.extensions.get('socketio')
     if socketio:
-    socketio.emit('notice_deleted', {'id': id})
+        socketio.emit('notice_deleted', {'id': id})
     
     return '', 204
 
@@ -154,7 +155,7 @@ def suppress_notice(id):
     from flask import current_app
     socketio = current_app.extensions.get('socketio')
     if socketio:
-    socketio.emit('notice_updated', notice.to_dict())
+        socketio.emit('notice_updated', notice.to_dict())
     
     return jsonify(notice.to_dict())
 
@@ -169,6 +170,6 @@ def restore_notice(id):
     from flask import current_app
     socketio = current_app.extensions.get('socketio')
     if socketio:
-    socketio.emit('notice_updated', notice.to_dict())
+        socketio.emit('notice_updated', notice.to_dict())
     
     return jsonify(notice.to_dict())

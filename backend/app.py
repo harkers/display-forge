@@ -9,13 +9,13 @@ import sys
 # Add parent directory to path for imports
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
+from datetime import datetime
+
 from flask import Flask, jsonify, request, send_from_directory
 from flask_cors import CORS
-from flask_socketio import SocketIO, emit
-from datetime import datetime, timedelta
-import json
+from flask_socketio import SocketIO
 
-from backend.models import db, Notice, CalendarSource, Setting, Display
+from backend.models import Notice, db
 
 
 def create_app():
@@ -37,10 +37,10 @@ def create_app():
     app.socketio = socketio
     
     # Register routes
-    from backend.routes.notices import notices_bp
     from backend.routes.calendar import calendar_bp
-    from backend.routes.settings import settings_bp
     from backend.routes.emergency import emergency_bp
+    from backend.routes.notices import notices_bp
+    from backend.routes.settings import settings_bp
     
     app.register_blueprint(notices_bp, url_prefix='/api/notices')
     app.register_blueprint(calendar_bp, url_prefix='/api/calendar')
@@ -85,7 +85,6 @@ def create_app():
     @socketio.on('register_display')
     def handle_register(data):
         """Register a display device"""
-        display_name = data.get('name', 'Unknown Display')
         # Could save to database here
         
     # Scheduler for auto-expiry

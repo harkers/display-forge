@@ -2,13 +2,14 @@
 Calendar API - Import and sync external calendars
 """
 
-from flask import Blueprint, request, jsonify, current_app
-from datetime import datetime, timedelta
-import requests
-from icalendar import Calendar as IcalCalendar
 import json
+from datetime import datetime, timedelta
 
-from backend.models import db, Notice, CalendarSource
+import requests
+from flask import Blueprint, current_app, jsonify, request
+from icalendar import Calendar as IcalCalendar
+
+from backend.models import CalendarSource, Notice, db
 
 calendar_bp = Blueprint('calendar', __name__)
 
@@ -54,9 +55,7 @@ def remove_calendar_source(id):
 @calendar_bp.route('/sync', methods=['POST'])
 def sync_calendars():
     """Trigger manual sync of all enabled calendar sources"""
-    from flask import current_app
     socketio = current_app.extensions.get('socketio')
-    if socketio:
     
     synced = []
     errors = []
